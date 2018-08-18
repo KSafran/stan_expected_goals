@@ -9,11 +9,8 @@ parameters {
   real beta_0;
 }
 transformed parameters {
-  vector[n] yhat;
-  
-  yhat = beta_0 + places * beta_place;
 }
 model {
   beta_place ~ normal(0, 5);
-  y ~ bernoulli_logit(yhat);
+  y ~ bernoulli_logit(beta_0 + places * beta_place);
 }

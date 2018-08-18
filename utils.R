@@ -29,3 +29,4 @@ collect_model_data <- function(data){
        places = location_matrix[good_data,])
   
 }
+

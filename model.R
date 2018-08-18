@@ -23,4 +23,8 @@ system.time(fit <- sampling(sm, data=stan_data))
 
 launch_shinystan(fit)
 
-
+# Compare to logistic regression
+library(glmnet)
+lm <- glmnet(cbind(stan_data$places, rep(1, length(stan_data$y))),
+             stan_data$y, family = 'binomial')
+coef(lm, s=lm$lambda[70])
