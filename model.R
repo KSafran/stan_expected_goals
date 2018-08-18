@@ -9,20 +9,12 @@ shot_data <- load_soccer_data('data/events.csv')
 
 # Pick a random 300 players to model
 
-players <- sample(unique(shot_data$player), 30)
+players <- sample(unique(shot_data$player), 70)
 shot_data <- shot_data %>% 
   filter(player %in% players) %>% 
   mutate(player = as.factor(player))
 
-location_vals <- sort(unique(shot_data$location))
-shot_data$location <- as.numeric(as.factor(shot_data$location))
-
-stan_data <- list(n = nrow(shot_data),
-                  nplayers = length(unique(shot_data$player)),
-                  nplaces = length(unique(shot_data$location)),
-                  y = shot_data$is_goal,
-                  players = as.numeric(shot_data$player),
-                  places = shot_data$location)
+stan_data <- collect_model_data(shot_data)
 
 rt <- stanc(file="multi_level.stan")
 sm <- stan_model(stanc_ret = rt, verbose=FALSE)
