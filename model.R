@@ -11,8 +11,7 @@ shot_data <- load_soccer_data('data/events.csv')
 
 players <- sample(unique(shot_data$player), 70)
 shot_data <- shot_data %>% 
-  filter(player %in% players) %>% 
-  mutate(player = as.factor(player))
+  filter(player %in% players)
 
 stan_data <- collect_model_data(shot_data)
 
