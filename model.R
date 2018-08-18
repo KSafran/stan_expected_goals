@@ -19,12 +19,12 @@ stan_data <- collect_model_data(shot_data)
 rt <- stanc(file="multi_level.stan")
 sm <- stan_model(stanc_ret = rt, verbose=FALSE)
 system.time(fit <- sampling(sm, data=stan_data))
-
+summary(fit, probs = c(0.05, 0.95))$summary
 
 launch_shinystan(fit)
 
 # Compare to logistic regression
 library(glmnet)
-lm <- glmnet(cbind(stan_data$places, rep(1, length(stan_data$y))),
+lm <- glmnet(stan_data$places,
              stan_data$y, family = 'binomial')
-coef(lm, s=lm$lambda[70])
+coef(lm, s=0)

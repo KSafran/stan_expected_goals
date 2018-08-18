@@ -11,6 +11,6 @@ parameters {
 transformed parameters {
 }
 model {
-  beta_place ~ normal(0, 5);
+  beta_place ~ normal(0, 2);
   y ~ bernoulli_logit(beta_0 + places * beta_place);
 }
