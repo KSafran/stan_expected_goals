@@ -24,12 +24,16 @@ collect_model_data <- function(data){
     good_data <- rowSums(location_matrix) > 0
     players <- data$player[good_data]
   
-  list(n = sum(good_data),
+  stan_data = list(n = sum(good_data),
        nplaces = ncol(location_matrix),
        nplayers = length(unique(players)),
        y = data$is_goal[good_data],
        player = as.numeric(as.factor(players)),
        places = location_matrix[good_data,])
+  
+  player_index = levels(as.factor(players))
+  
+  list(stan_data=stan_data, player_index=player_index)
   
 }
 
